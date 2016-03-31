@@ -8,7 +8,9 @@
 		{
 			"format"		: "DD-MM-YYYY",
 			"calendar_date" : moment().startOf('month'),
-			"selected_day"  : null
+			"selected_day"  : null,
+			"start_year"	: 2010,
+			"end_year"		: 2020
 		};  
 
 		//fusionner les deux objets
@@ -44,17 +46,18 @@
 			element.next().find("table").empty();
 			var table = refresh_calendar(element);
 			element.next().append(table);
-			element.next().find('h2').text(parameters.calendar_date.format('MMMM YYYY'))
+			element.next().find('h2').text(parameters.calendar_date.format('MMMM'));
+			element.next().find('select.years-select').val(parameters.calendar_date.format('YYYY'));
 		}
 
 		//	initialiser le contenu html du calendrier
 		function init_template(element){
 			var main_div = $("<div class='slds-datepicker slds-dropdown slds-dropdown--left slds-hide'>");
 			var filter_div = $("<div class='slds-datepicker__filter slds-grid'>");
-			var filter_div_container = $("<div class='slds-datepicker__filter--month slds-grid slds-grid--align-spread slds-grow'>");
+			var filter_div_month = $("<div class='slds-datepicker__filter--month slds-grid slds-grid--align-spread slds-grow'>");
 			var command_next_button = $("<div class='slds-align-middle'>");
 			var command_previous_button = $("<div class='slds-align-middle'>");
-			var month_text = $("<h2 class='slds-align-middle'>" + parameters.calendar_date.format('MMMM YYYY') + "</h2>");
+			var month_text = $("<h2 class='slds-align-middle'>" + parameters.calendar_date.format('MMMM') + "</h2>");
 			var next_button = $("<button class='slds-button slds-button--icon-container'>")
 								.bind("click", function(){
 									next_month(element);
@@ -68,7 +71,31 @@
 								});
 			var previous_icon = $("<span style='color:  rgb(84, 105, 141);font-size: 20px;'>&#9664;</span>");
 
-			main_div.append(filter_div.append(filter_div_container.append(command_previous_button.append(previous_button.append(previous_icon))).append(month_text).append(command_next_button.append(next_button.append(next_icon)))));
+			var filter_div_year = $("<div class='slds-shrink-none'>");
+			var filter_div_year_container = $("<div class='slds-select_container'>");
+
+			var years_select = $("<select class='slds-select years-select'>")
+								.bind("change", function(){
+									set_year(element, $(this).val());
+									return false;
+								});
+			for (var i = parameters.start_year; i <= parameters.end_year; i++) {
+				years_select.append($("<option>" + i + "</option>"));
+			}
+			filter_div_year_container.append(years_select);
+
+			main_div
+				.append(filter_div
+							.append(filter_div_month
+										.append(command_previous_button
+													.append(previous_button
+														.append(previous_icon)))
+										.append(month_text)
+										.append(command_next_button
+													.append(next_button
+														.append(next_icon))))
+							.append(filter_div_year
+										.append(filter_div_year_container)));
 			var table = refresh_calendar(element);
 			main_div.append(table);
 			return main_div;
@@ -144,5 +171,9 @@
 			refresh(element);
 		}
 
+		function set_year(element, val){
+			parameters.calendar_date.set('year', val);
+			refresh(element);
+		}
 	};
 })(jQuery);
