@@ -80,7 +80,11 @@
 									return false;
 								});
 			for (var i = parameters.start_year; i <= parameters.end_year; i++) {
-				years_select.append($("<option>" + i + "</option>"));
+				var option = $("<option>" + i + "</option>")
+				if(i == parameters.calendar_date.format('YYYY')){
+					option.prop("selected", true);
+				}
+				years_select.append(option);
 			}
 			filter_div_year_container.append(years_select);
 
