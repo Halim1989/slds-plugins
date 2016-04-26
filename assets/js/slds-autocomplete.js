@@ -7,7 +7,8 @@
 		var defauts=
 		{
 			"source"	: [],
-			"add_item" 	: null
+			"add_item" 	: null,
+			"on_select"	: null
 		};  
 
 		//fusionner les deux objets
@@ -118,6 +119,12 @@
 			selected_span.text(value);
 			element.val(id);
 			element.attr("automcomplete-value", value);
+			if(parameters.on_select){
+				parameters.on_select({
+					"id" : id,
+					"value" : value
+				});
+			}
 		}
 
 		function unselect(element){
