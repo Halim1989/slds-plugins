@@ -21,7 +21,13 @@
 			$(this).keyup(function(){
 				var q = $(this).val();
 				if(parameters.source instanceof Array){
-					search_display(parameters.source, q, _this);
+					var result = [];
+					for (var i = 0; i < parameters.source.length; i++) {
+						if(parameters.source[i].value.toUpperCase().indexOf(q.toUpperCase()) != -1){
+							result.push(parameters.source[i]);
+						}
+					};
+					refresh_template(result, _this);
 				}
 				else if(typeof parameters.source == 'string'){
 					if(jqxhr != null){
@@ -32,7 +38,7 @@
 						"q" : q
 					}, function(data) {
 						_this.removeClass("slds_autocomplete_loading");
-						search_display(data, q, _this);
+						refresh_template(data, _this);
 					});
 				}
 			});
@@ -79,16 +85,6 @@
 			selected_link.append(selected_text).append(selected_btn);
 			selected_container.append(selected_link);
 			return selected_container;
-		}
-
-		function search_display(source, q, element){
-			var result = [];
-			for (var i = 0; i < source.length; i++) {
-				if(source[i].value.toUpperCase().indexOf(q.toUpperCase()) != -1){
-					result.push(source[i]);
-				}
-			};
-			refresh_template(result, element);
 		}
 
 		function refresh_template(result, element){
