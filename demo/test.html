@@ -13,7 +13,10 @@
 	<div class="slds">
 		<div class="slds-form-element">
 			<div class="slds-form-element__control">
-				<input id="search" class="slds-input" type="text" placeholder="Placeholder Text" />
+				<input id="search" class="slds-input" type="text" placeholder="Languages ..." />
+			</div>
+			<div class="slds-form-element__control">
+				<input id="search_sports" class="slds-input" type="text" placeholder="Sports ..." />
 			</div>
 		</div>
 	</div>
@@ -30,6 +33,18 @@
 			"id": "3",
 			"value": "javascript"
 		}];
+
+		var sports = [{
+			"id": "1",
+			"value": "Handball"
+		}, {
+			"id": "2",
+			"value": "football"
+		}];
+
+		var autocomplete_sports = jQuery("#search_sports").slds_autocomplete({
+			source : sports
+		});
 
 		var autocomplete = jQuery("#search").slds_autocomplete({
 			on_select: function( event, data ) {

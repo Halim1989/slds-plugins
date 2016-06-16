@@ -11,7 +11,6 @@ $.widget( "hb.slds_autocomplete", {
     _create: function() {
 
         _this = this;
-
         //  Initialisation de l'autocomplete
         this._init_selected_template();
         this._init_list_template();
@@ -25,6 +24,10 @@ $.widget( "hb.slds_autocomplete", {
             }
         });
         
+        _this._keyup(_this);
+    },
+
+    _keyup : function(_this){
         jqxhr = null;
         this.element.keyup(function(){
             var q = $(this).val();
@@ -52,7 +55,6 @@ $.widget( "hb.slds_autocomplete", {
                 }
             }
         });
-
     },
 
     _setOption: function( key, value ) {
