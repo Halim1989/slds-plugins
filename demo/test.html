@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Demo test</title>
+	<link rel="stylesheet" type="text/css" href="../assets/styles/salesforce-lightning-design-system-vf.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="../assets/js/slds-autocomplete-new.js"></script>
+</head>
+<body>
+
+
+	<div class="slds">
+		<div class="slds-form-element">
+			<div class="slds-form-element__control">
+				<input id="search" class="slds-input" type="text" placeholder="Placeholder Text" />
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+
+		var data = [{
+			"id": "1",
+			"value": "java"
+		}, {
+			"id": "2",
+			"value": "c++"
+		}, {
+			"id": "3",
+			"value": "javascript"
+		}];
+
+		var autocomplete = jQuery("#search").slds_autocomplete({
+			on_select: function( event, data ) {
+				console.log(data.id);
+			},
+			on_unselect: function(event, data){
+				console.log('unselected !');
+			}
+		});
+
+		autocomplete.slds_autocomplete( "option", "source", data );
+
+	</script>
+
+</body>
+</html>
